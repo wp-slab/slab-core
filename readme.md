@@ -1,3 +1,3 @@
 # Slab Core
 
-An example plugin using Slab components. See http://www.wp-slab.com/ for more information.
+The Slab framework. The core functionality to make your site better. See http://www.wp-slab.com/components/core for more information.
