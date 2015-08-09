@@ -16,6 +16,8 @@ Repo URI: github.com/wp-slab/slab-core
 define('SLAB_CORE_INIT', true);
 define('SLAB_CORE_DIR', plugin_dir_path(__FILE__));
 define('SLAB_CORE_URL', plugin_dir_url(__FILE__));
+define('SLAB_CORE_START_TIME', microtime(true));
+define('SLAB_CORE_START_MEMORY', memory_get_usage());
 
 
 // Include
@@ -37,11 +39,12 @@ function slab_core_init() {
 	$slab->singleton('Slab\Core\Autoloader', $autoloader);
 	$slab->singleton('autoloader', $autoloader);
 
-	// $slab->singleton('request', function(){
-	// 	return new Slab\Core\Request;
-	// });
+	$slab->singleton('Slab\Core\Http\Request', function(){
+		return Slab\Core\Http\Request::createFromGlobals();
+	});
 
 	do_action('slab_init', $slab);
+	do_action('slab_boot', $slab);
 	do_action('slab_loaded', $slab);
 
 }
