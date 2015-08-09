@@ -42,7 +42,7 @@ class Request implements RequestInterface {
 		}
 
 		if(isset($_SERVER['REQUEST_URI'])) {
-			$request->setPath($_SERVER['REQUEST_URI']);
+			$request->setPath(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 		}
 
 		if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
