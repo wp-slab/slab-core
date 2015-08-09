@@ -1,6 +1,29 @@
 <?php
 
 /**
+ * Get a slab instance or resolve a class
+ *
+ * @param string Class name to resolve
+ * @return mixed Value
+ **/
+function slab($class = null) {
+
+	static $slab;
+
+	if($slab === null) {
+		$slab = Slab\Core\Application::instance();
+	}
+
+	if($class === null) {
+		return $slab;
+	}
+
+	return $slab->make($class);
+
+}
+
+
+/**
  * Output print_r wrapped in pre tags
  *
  * @param mixed Var
