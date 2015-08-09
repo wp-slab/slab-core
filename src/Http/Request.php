@@ -11,7 +11,7 @@ use RuntimeException;
  * @package default
  * @author Luke Lanchester
  **/
-class Request {
+class Request implements RequestInterface {
 
 
 	/**
