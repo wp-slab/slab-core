@@ -3,9 +3,9 @@
 namespace Slab\Core\Http;
 
 /**
- * HTTP Response
+ * HTTP Response Interface
  *
  * @package default
  * @author Luke Lanchester
  **/
-class Response implements ResponseInterface {}
+interface ResponseInterface {}
