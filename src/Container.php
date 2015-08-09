@@ -23,6 +23,12 @@ class Container implements ArrayAccess {
 
 
 	/**
+	 * @var array Binding aliases
+	 **/
+	protected $aliases = [];
+
+
+	/**
 	 * @var array Singleton instances
 	 **/
 	protected $instances = [];
@@ -38,6 +44,21 @@ class Container implements ArrayAccess {
 	 * @var array Class constructor params
 	 **/
 	protected $constructor_params = [];
+
+
+	/**
+	 * Bind an alias to another binding
+	 *
+	 * @param string Aliased key
+	 * @param string Concrete binding
+	 * @return void
+	 **/
+	public function alias($key, $concrete) {
+
+		$this->aliases[$key] = $concrete;
+
+	}
+
 
 
 	/**
@@ -84,6 +105,10 @@ class Container implements ArrayAccess {
 	 * @return mixed Value
 	 **/
 	public function make($key) {
+
+		if(array_key_exists($key, $this->aliases)) {
+			$key = $this->aliases[$key];
+		}
 
 		if(array_key_exists($key, $this->bindings)) {
 			return $this->build($key);

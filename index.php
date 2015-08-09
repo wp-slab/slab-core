@@ -37,11 +37,12 @@ function slab_core_init() {
 
 	$slab = Slab\Core\Application::instance();
 	$slab->singleton('Slab\Core\Autoloader', $autoloader);
-	$slab->singleton('autoloader', $autoloader);
+	$slab->alias('autoloader', 'Slab\Core\Autoloader');
 
 	$slab->singleton('Slab\Core\Http\Request', function(){
 		return Slab\Core\Http\Request::createFromGlobals();
 	});
+	$slab->alias('request', 'Slab\Core\Http\Request');
 
 	do_action('slab_init', $slab);
 	do_action('slab_boot', $slab);
