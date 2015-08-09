@@ -47,7 +47,7 @@ class Container implements ArrayAccess {
 	 * @param mixed Value
 	 * @return void
 	 **/
-	public function singleton($key, $value) {
+	public function singleton($key, $value = null) {
 
 		return $this->bind($key, $value, true);
 
@@ -62,7 +62,11 @@ class Container implements ArrayAccess {
 	 * @param mixed Value
 	 * @return void
 	 **/
-	public function bind($key, $value, $singleton = false) {
+	public function bind($key, $value = null, $singleton = false) {
+
+		if($value === null) {
+			$value = $key;
+		}
 
 		$this->bindings[$key] = [
 			'singleton' => (bool) $singleton,
@@ -80,10 +84,6 @@ class Container implements ArrayAccess {
 	 * @return mixed Value
 	 **/
 	public function make($key) {
-
-		if(array_key_exists($key, $this->instances)) {
-			return $this->instances[$key];
-		}
 
 		if(array_key_exists($key, $this->bindings)) {
 			return $this->build($key);
@@ -188,12 +188,16 @@ class Container implements ArrayAccess {
 	 **/
 	protected function build($key) {
 
+		if(array_key_exists($key, $this->instances)) {
+			return $this->instances[$key];
+		}
+
 		$map = $this->bindings[$key];
 
 		if(is_object($map['value'])) {
 			$obj = ($map['value'] instanceof Closure) ? $map['value']->__invoke($this) : $map['value'];
 		} else {
-			$obj = $this->make($map['value']);
+			$obj = $this->resolveClass($map['value']);
 		}
 
 		if($map['singleton'] === true) {
