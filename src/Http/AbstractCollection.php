@@ -36,4 +36,32 @@ abstract class AbstractCollection {
 
 
 
+	/**
+	 * Get an item
+	 *
+	 * @param string Key
+	 * @param mixed Default
+	 * @return mxied Value
+	 **/
+	public function get($key, $default = null) {
+
+		return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
+
+	}
+
+
+
+	/**
+	 * Get all data
+	 *
+	 * @return array Data
+	 **/
+	public function all() {
+
+		return $this->data;
+
+	}
+
+
+
 }
