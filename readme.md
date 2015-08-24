@@ -8,35 +8,35 @@ Slab is currently under heavy active development. While the previous version of 
 
 - [x] Autoloader
 - [x] IoC Container
-- [*] Request/Response (started)
+- [x] Request/Response (started)
 - [ ] Env
 - [ ] Config
 - [ ] Cookie
 - [ ] Helpers (array, collection etc)
-- [*] Test suite (started)
-- [*] Composer/packagist, wpackagist, WordPress SVN (started)
+- [x] Test suite (started)
+- [x] Composer/packagist, wpackagist, WordPress SVN (started)
 
 
 ## Modules
 
 The Slab Core plugin contains only the core components required for Slab. Specific functionality is split into separate plugins, allowing for sites to include just the parts they need.
 
-- [*] Core (started)
+- [x] Core (started)
 - [ ] API
 - [ ] Auth
 - [ ] Cache
-- [*] CLI (started)
-- [*] DB (started)
+- [x] CLI (started)
+- [x] DB (started)
 - [ ] Email
 - [ ] HTTP
 - [ ] Image
 - [ ] Logging
 - [ ] Migrations
 - [ ] Queue
-- [*] Router (started)
+- [x] Router (started)
 - [ ] Session
 - [ ] Storage
-- [*] Updater (started)
+- [x] Updater (started)
 - [ ] Validation
-- [*] View (started)
+- [x] View (started)
 - [ ] WordPress
