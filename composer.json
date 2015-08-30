@@ -1,17 +1,17 @@
 {
-  "name": "wp-slab/slab-core",
-  "type": "wordpress-plugin",
-  "description": "The Slab framework. The core functionality to make your site better.",
-  "keywords": ["slab", "wordpress"],
-  "homepage": "http://www.wp-slab.com/components/core",
-  "license": "MIT",
-  "authors": [{
-    "name": "Luke Lanchester",
-    "email": "luke@lukelanchester.com",
-    "homepage": "http://hybridlogic.co.uk"
-  }],
-  "require": {
-    "php": ">=5.3.0",
-    "composer/installers": "~1.0"
-  }
+	"name": "wp-slab/slab-core",
+	"description": "The Slab framework. The core functionality to make your site better.",
+	"type": "wordpress-plugin",
+	"license": "MIT",
+	"keywords": ["slab", "wordpress"],
+	"homepage": "http://www.wp-slab.com/components/core",
+	"authors": [{
+		"name": "Luke Lanchester",
+		"email": "luke@lukelanchester.com",
+		"homepage": "http://hybridlogic.co.uk"
+	}],
+	"require": {
+		"php": ">=5.5.9",
+		"composer/installers": "~1.0.12"
+	}
 }
