@@ -3,6 +3,7 @@
 namespace Slab\Core;
 
 use ArrayAccess;
+use BadMethodCallException;
 use Closure;
 use ReflectionClass;
 use RuntimeException;
@@ -41,9 +42,9 @@ class Container implements ArrayAccess {
 
 
 	/**
-	 * @var array Class constructor params
+	 * @var array Method reflectors
 	 **/
-	protected $constructor_params = [];
+	protected $method_reflectors = [];
 
 
 	/**
@@ -115,6 +116,29 @@ class Container implements ArrayAccess {
 		}
 
 		return $this->resolveClass($key);
+
+	}
+
+
+
+	/**
+	 * Make and execute a method on a class
+	 *
+	 * @param string Callback e.g. MyClass@myMethod
+	 * @param array Optional method args
+	 * @return mixed Result
+	 **/
+	public function makeMethod($str, array $args = null) {
+
+		if(strpos($str, '@') === false) {
+			return null;
+		}
+
+		list($class, $method) = explode('@', $str, 2);
+
+		$obj = $this->make($class);
+
+		return $this->resolveMethod($obj, $method, $args);
 
 	}
 
@@ -245,7 +269,7 @@ class Container implements ArrayAccess {
 
 		$reflector = $this->getClassReflector($class);
 
-		$params = $this->getConstructorParams($reflector);
+		$params = $this->getMethodParams($reflector, '__construct');
 
 		if(empty($params)) {
 			return new $class;
@@ -280,6 +304,65 @@ class Container implements ArrayAccess {
 
 
 	/**
+	 * Fire a method on an object after resolving any dependencies
+	 *
+	 * @param stdClass Object
+	 * @param string Method name
+	 * @param array Optional args
+	 * @return mixed Result
+	 **/
+	protected function resolveMethod($obj, $method, array $input_args = null) {
+
+		$class = get_class($obj);
+		$key = "$class.$method";
+		$reflector = $this->getClassReflector($class);
+
+		$params = $this->getMethodParams($reflector, $method);
+
+		if(empty($params)) {
+			if(empty($input_args)) {
+				return $obj->$method();
+			} else {
+				return call_user_func_array([$obj, $method], $input_args);
+			}
+		}
+
+		$args = [];
+
+		foreach($params as $param) {
+
+			if($param->isOptional()) {
+				break;
+			}
+
+			$param_class = $param->getClass();
+			if(!$param_class) {
+				if(empty($input_args)) {
+					throw new RuntimeException("Unresolvable dependency for $class: " . $param->getName());
+				}
+				$args[] = array_shift($input_args);
+			}
+
+			$arg = $this->make($param_class->getName());
+			if(!$arg) {
+				throw new RuntimeException("Unknown dependency for $class: " . $param->getName());
+			}
+
+			$args[] = $arg;
+
+		}
+
+		if(!empty($input_args)) {
+			$args = array_merge($args, $input_args);
+		}
+
+		return call_user_func_array([$obj, $method], $args);
+
+	}
+
+
+
+	/**
 	 * Get reflector for class
 	 *
 	 * @param string Class name
@@ -298,30 +381,35 @@ class Container implements ArrayAccess {
 
 
 	/**
-	 * Get params for class constructor
+	 * Get params for a class method
 	 *
 	 * @param ReflectionClass
 	 * @return array ReflectionParameter
 	 **/
-	protected function getConstructorParams(ReflectionClass $reflector) {
+	protected function getMethodParams(ReflectionClass $reflector, $method_name) {
 
 		$class = $reflector->getName();
+		$key = "$class.$method_name";
 
-		if(array_key_exists($class, $this->constructor_params)) {
-			return $this->constructor_params[$class];
+		if(array_key_exists($key, $this->method_reflectors)) {
+			return $this->method_reflectors[$key];
 		}
 
-		$constructor = $reflector->getConstructor();
-		if(!$constructor) {
-			return $this->constructor_params[$class] = [];
+		if(!method_exists($class, $method_name)) {
+			return $this->method_reflectors[$key] = [];
 		}
 
-		$params = $constructor->getParameters();
+		$method = $reflector->getMethod($method_name);
+		if(!$method) {
+			return $this->method_reflectors[$key] = [];
+		}
+
+		$params = $method->getParameters();
 		if(empty($params)) {
-			return $this->constructor_params[$class] = [];
+			return $this->method_reflectors[$key] = [];
 		}
 
-		return $this->constructor_params[$class] = $params;
+		return $this->method_reflectors[$key] = $params;
 
 	}
 
