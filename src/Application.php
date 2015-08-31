@@ -2,6 +2,8 @@
 
 namespace Slab\Core;
 
+use Slab\Core\Util\SingletonTrait;
+
 /**
  * Slab Application
  *
