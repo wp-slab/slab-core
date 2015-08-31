@@ -5,6 +5,11 @@ namespace Slab\Core\Http;
 use OutOfBoundsException;
 use RuntimeException;
 
+use Slab\Core\Http\Collection\QueryCollection;
+use Slab\Core\Http\Collection\BodyCollection;
+use Slab\Core\Http\Collection\FilesCollection;
+use Slab\Core\Http\Collection\AttributeCollection;
+
 /**
  * HTTP Request
  *
@@ -135,25 +140,25 @@ class Request implements RequestInterface {
 
 
 	/**
-	 * @var Slab\Core\Http\QueryCollection
+	 * @var Slab\Core\Http\Collection\QueryCollection
 	 **/
 	public $query;
 
 
 	/**
-	 * @var Slab\Core\Http\BodyCollection
+	 * @var Slab\Core\Http\Collection\BodyCollection
 	 **/
 	public $body;
 
 
 	/**
-	 * @var Slab\Core\Http\FilesCollection
+	 * @var Slab\Core\Http\Collection\FilesCollection
 	 **/
 	public $files;
 
 
 	/**
-	 * @var Slab\Core\Http\AttributeCollection
+	 * @var Slab\Core\Http\Collection\AttributeCollection
 	 **/
 	public $attributes;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Slab\Core\Http;
+namespace Slab\Core\Http\Collection;
 
 /**
  * Query Params Collection
