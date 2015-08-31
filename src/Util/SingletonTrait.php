@@ -1,6 +1,6 @@
 <?php
 
-namespace Slab\Core;
+namespace Slab\Core\Util;
 
 /**
  * Singleton Trait
