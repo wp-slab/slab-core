@@ -1,14 +1,14 @@
 <?php
 
-namespace Slab\Core\Http\Collection;
+namespace Slab\Core\Util;
 
 /**
- * Abstract Collection
+ * Basic Collection
  *
  * @package default
  * @author Luke Lanchester
  **/
-abstract class AbstractCollection {
+class BaseCollection {
 
 
 	/**
