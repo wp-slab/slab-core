@@ -6,6 +6,7 @@ use ArrayAccess;
 use BadMethodCallException;
 use Closure;
 use ReflectionClass;
+use ReflectionFunction;
 use RuntimeException;
 
 /**
@@ -139,6 +140,71 @@ class Container implements ArrayAccess {
 		$obj = $this->make($class);
 
 		return $this->resolveMethod($obj, $method, $args);
+
+	}
+
+
+
+	/**
+	 * Fire a method on an object after resolving any dependencies
+	 *
+	 * @param stdClass Object
+	 * @param string Method name
+	 * @param array Optional args
+	 * @return mixed Result
+	 **/
+	public function resolveMethod($obj, $method, array $input_args = null) {
+
+		if(is_a($obj, 'Closure')) {
+			$class = 'Closure';
+			$method = '__invoke';
+			$reflector = new ReflectionFunction($obj);
+			$params = $reflector->getParameters();
+		} else {
+			$class = get_class($obj);
+			$reflector = $this->getClassReflector($class);
+			$params = $this->getMethodParams($reflector, $method);
+		}
+
+		if(empty($params)) {
+			if(empty($input_args)) {
+				return $obj->$method();
+			} else {
+				return call_user_func_array([$obj, $method], $input_args);
+			}
+		}
+
+		$args = [];
+
+		foreach($params as $param) {
+
+			if($param->isOptional()) {
+				break;
+			}
+
+			$param_class = $param->getClass();
+			if(!$param_class) {
+				if(empty($input_args)) {
+					throw new RuntimeException("Unresolvable dependency for $class: " . $param->getName());
+				}
+				$args[] = array_shift($input_args);
+				continue;
+			}
+
+			$arg = $this->make($param_class->getName());
+			if(!$arg) {
+				throw new RuntimeException("Unknown dependency for $class: " . $param->getName());
+			}
+
+			$args[] = $arg;
+
+		}
+
+		if(!empty($input_args)) {
+			$args = array_merge($args, $input_args);
+		}
+
+		return call_user_func_array([$obj, $method], $args);
 
 	}
 
@@ -298,68 +364,6 @@ class Container implements ArrayAccess {
 		}
 
 		return $reflector->newInstanceArgs($args);
-
-	}
-
-
-
-	/**
-	 * Fire a method on an object after resolving any dependencies
-	 *
-	 * @param stdClass Object
-	 * @param string Method name
-	 * @param array Optional args
-	 * @return mixed Result
-	 **/
-	protected function resolveMethod($obj, $method, array $input_args = null) {
-
-		$class = get_class($obj);
-		$key = "$class.$method";
-		$reflector = $this->getClassReflector($class);
-
-		$params = $this->getMethodParams($reflector, $method);
-
-		if(empty($params)) {
-			if(empty($input_args)) {
-				return $obj->$method();
-			} else {
-				return call_user_func_array([$obj, $method], $input_args);
-			}
-		} elseif(!empty($input_args)) {
-			return call_user_func_array([$obj, $method], $input_args);
-		}
-
-		$args = [];
-
-		foreach($params as $param) {
-
-			if($param->isOptional()) {
-				break;
-			}
-
-			$param_class = $param->getClass();
-			if(!$param_class) {
-				if(empty($input_args)) {
-					throw new RuntimeException("Unresolvable dependency for $class: " . $param->getName());
-				}
-				$args[] = array_shift($input_args);
-				continue;
-			}
-
-			$arg = $this->make($param_class->getName());
-			if(!$arg) {
-				throw new RuntimeException("Unknown dependency for $class: " . $param->getName());
-			}
-
-			$args[] = $arg;
-
-		}
-
-		if(!empty($input_args)) {
-			$args = array_merge($args, $input_args);
-		}
-
-		return call_user_func_array([$obj, $method], $args);
 
 	}
 
