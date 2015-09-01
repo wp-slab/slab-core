@@ -36,6 +36,8 @@ function slab_core_init() {
 	$autoloader->registerNamespace('Slab\Core', SLAB_CORE_DIR . 'src');
 
 	$slab = Slab\Core\Application::instance();
+	$slab->singleton('Slab\Core\Application', $slab);
+
 	$slab->singleton('Slab\Core\Autoloader', $autoloader);
 	$slab->alias('autoloader', 'Slab\Core\Autoloader');
 
