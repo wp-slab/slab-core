@@ -325,6 +325,8 @@ class Container implements ArrayAccess {
 			} else {
 				return call_user_func_array([$obj, $method], $input_args);
 			}
+		} elseif(!empty($input_args)) {
+			return call_user_func_array([$obj, $method], $input_args);
 		}
 
 		$args = [];
@@ -341,6 +343,7 @@ class Container implements ArrayAccess {
 					throw new RuntimeException("Unresolvable dependency for $class: " . $param->getName());
 				}
 				$args[] = array_shift($input_args);
+				continue;
 			}
 
 			$arg = $this->make($param_class->getName());
