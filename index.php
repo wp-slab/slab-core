@@ -41,10 +41,10 @@ function slab_core_init() {
 	$slab->singleton('Slab\Core\Autoloader', $autoloader);
 	$slab->alias('autoloader', 'Slab\Core\Autoloader');
 
-	$slab->singleton('Slab\Core\Http\Request', function(){
+	$slab->singleton('Slab\Core\Http\RequestInterface', function(){
 		return Slab\Core\Http\Request::createFromGlobals();
 	});
-	$slab->alias('request', 'Slab\Core\Http\Request');
+	$slab->alias('request', 'Slab\Core\Http\RequestInterface');
 
 	do_action('slab_init', $slab);
 	do_action('slab_boot', $slab);
