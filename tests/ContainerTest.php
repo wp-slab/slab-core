@@ -1,5 +1,7 @@
 <?php
 
+use Slab\Core\Container;
+
 class ContainerTestClass {}
 
 /**
@@ -24,7 +26,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase {
 	 **/
 	public function setUp() {
 
-		$this->container = new Slab\Core\Container;
+		$this->container = new Container;
 
 	}
 

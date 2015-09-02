@@ -1,4 +1,4 @@
-# Slab Core
+# Slab Core [![Build Status](https://travis-ci.org/wp-slab/slab-core.svg)](https://travis-ci.org/wp-slab/slab-core)
 
 The Slab framework. The core functionality to make your site better. See http://www.wp-slab.com/components/core for more information.
 
