@@ -139,7 +139,7 @@ class Container implements ArrayAccess {
 
 		$obj = $this->make($class);
 
-		return $this->resolveMethod($obj, $method, $args);
+		return $this->fireMethod($obj, $method, $args);
 
 	}
 
@@ -153,7 +153,7 @@ class Container implements ArrayAccess {
 	 * @param array Optional args
 	 * @return mixed Result
 	 **/
-	public function resolveMethod($obj, $method, array $input_args = null) {
+	public function fireMethod($obj, $method, array $input_args = null) {
 
 		if(is_a($obj, 'Closure')) {
 			$class = 'Closure';
