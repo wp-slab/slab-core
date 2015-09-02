@@ -8,4 +8,15 @@ namespace Slab\Core\Http;
  * @package default
  * @author Luke Lanchester
  **/
-interface ResponseInterface {}
+interface ResponseInterface {
+
+
+	/**
+	 * Output response
+	 *
+	 * @return void
+	 **/
+	public function serve();
+
+
+}
