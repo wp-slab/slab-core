@@ -37,6 +37,7 @@ function slab_core_init() {
 
 	$slab = Slab\Core\Application::instance();
 	$slab->singleton('Slab\Core\Application', $slab);
+	$slab->alias('Slab\Core\ContainerInterface', 'Slab\Core\Application');
 
 	$slab->singleton('Slab\Core\Autoloader', $autoloader);
 	$slab->alias('autoloader', 'Slab\Core\Autoloader');

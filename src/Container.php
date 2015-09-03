@@ -15,7 +15,7 @@ use RuntimeException;
  * @package default
  * @author Luke Lanchester
  **/
-class Container implements ArrayAccess {
+class Container implements ArrayAccess, ContainerInterface {
 
 
 	/**
