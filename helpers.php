@@ -24,6 +24,21 @@ function slab($class = null) {
 
 
 /**
+ * Get a value from an array by key
+ *
+ * @param array Array
+ * @param string Key
+ * @param mixed Default
+ * @return mixed Value
+ **/
+function array_get(array $arr, $key, $default = null) {
+
+	return array_key_exists($key, $arr) ? $arr[$key] : $default;
+
+}
+
+
+/**
  * Output print_r wrapped in pre tags
  *
  * @param mixed Var
@@ -51,3 +66,4 @@ function _var_dump() {
 	}
 	echo '</pre>';
 }
+
