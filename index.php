@@ -22,33 +22,9 @@ define('SLAB_CORE_START_MEMORY', memory_get_usage());
 
 // Include
 include SLAB_CORE_DIR . 'helpers.php';
+include SLAB_CORE_DIR . 'functions.php';
 include SLAB_CORE_DIR . 'src/Autoloader.php';
 
 
 // Hooks
-add_action('plugins_loaded', 'slab_core_init', 5);
-
-
-// Init
-function slab_core_init() {
-
-	$autoloader = new Slab\Core\Autoloader;
-	$autoloader->registerNamespace('Slab\Core', SLAB_CORE_DIR . 'src');
-
-	$slab = Slab\Core\Application::instance();
-	$slab->singleton('Slab\Core\Application', $slab);
-	$slab->alias('Slab\Core\ContainerInterface', 'Slab\Core\Application');
-
-	$slab->singleton('Slab\Core\Autoloader', $autoloader);
-	$slab->alias('autoloader', 'Slab\Core\Autoloader');
-
-	$slab->singleton('Slab\Core\Http\RequestInterface', function(){
-		return Slab\Core\Http\Request::createFromGlobals();
-	});
-	$slab->alias('request', 'Slab\Core\Http\RequestInterface');
-
-	do_action('slab_init', $slab);
-	do_action('slab_boot', $slab);
-	do_action('slab_loaded', $slab);
-
-}
+add_action('plugins_loaded', 'Slab\Core\slab_core_init', 5);
