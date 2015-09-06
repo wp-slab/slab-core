@@ -36,7 +36,7 @@ The Slab Core plugin contains only the core components required for Slab. Specif
 - [x] Router (started)
 - [ ] Session
 - [ ] Storage
+- [x] Theme (started)
 - [x] Updater (started)
 - [ ] Validation
 - [x] View (started)
-- [ ] WordPress
