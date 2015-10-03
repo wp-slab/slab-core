@@ -6,6 +6,7 @@
  * @param string Class name to resolve
  * @return mixed Value
  **/
+if(!function_exists('slab')) {
 function slab($class = null) {
 
 	static $slab;
@@ -21,6 +22,7 @@ function slab($class = null) {
 	return $slab->make($class);
 
 }
+}
 
 
 /**
@@ -31,10 +33,12 @@ function slab($class = null) {
  * @param mixed Default
  * @return mixed Value
  **/
+if(!function_exists('array_get')) {
 function array_get(array $arr, $key, $default = null) {
 
 	return array_key_exists($key, $arr) ? $arr[$key] : $default;
 
+}
 }
 
 
@@ -47,10 +51,12 @@ function array_get(array $arr, $key, $default = null) {
  * @param int|float Maximum value
  * @return int|float Clamped value
  **/
+if(!function_exists('clamp')) {
 function clamp($value, $min, $max) {
 
 	return max($min, min($value, $max));
 
+}
 }
 
 
@@ -60,12 +66,14 @@ function clamp($value, $min, $max) {
  * @param mixed Var
  * @return void
  **/
+if(!function_exists('_print_r')) {
 function _print_r() {
 	echo '<pre>';
 	foreach(func_get_args() as $var) {
 		print_r($var);
 	}
 	echo '</pre>';
+}
 }
 
 
@@ -75,6 +83,7 @@ function _print_r() {
  * @param mixed Var
  * @return void
  **/
+if(!function_exists('_var_dump')) {
 function _var_dump() {
 	echo '<pre>';
 	foreach(func_get_args() as $var) {
@@ -82,4 +91,4 @@ function _var_dump() {
 	}
 	echo '</pre>';
 }
-
+}
