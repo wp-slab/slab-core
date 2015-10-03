@@ -38,6 +38,22 @@ function array_get(array $arr, $key, $default = null) {
 }
 
 
+
+/**
+ * Ensure value is between the min and max, inclusive
+ *
+ * @param int|float Value
+ * @param int|float Minimum value
+ * @param int|float Maximum value
+ * @return int|float Clamped value
+ **/
+function clamp($value, $min, $max) {
+
+	return max($min, min($value, $max));
+
+}
+
+
 /**
  * Output print_r wrapped in pre tags
  *
