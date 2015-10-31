@@ -6,9 +6,9 @@ Slab is currently under heavy active development. While the previous version of 
 
 ## Features
 
-- [x] Autoloader
+- [x] ~~Autoloader~~ (composer)
 - [x] IoC Container
-- [x] Request/Response (started)
+- [x] Request/Response (symfony/httpfoundation)
 - [ ] Env
 - [ ] Config
 - [ ] Cookie
