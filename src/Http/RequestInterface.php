@@ -8,6 +8,4 @@ namespace Slab\Core\Http;
  * @package default
  * @author Luke Lanchester
  **/
-interface RequestInterface {
-
-}
+interface RequestInterface {}
