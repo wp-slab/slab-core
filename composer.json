@@ -10,6 +10,11 @@
 		"email": "luke@lukelanchester.com",
 		"homepage": "http://hybridlogic.co.uk"
 	}],
+	"autoload": {
+		"psr-4": {
+			"Slab\\Core\\": "src",
+		}
+	},
 	"require": {
 		"php": ">=5.5.9",
 		"composer/installers": "~1.0.12"
