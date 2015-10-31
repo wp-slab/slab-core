@@ -2,107 +2,32 @@
 
 namespace Slab\Core\Http;
 
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+
 /**
  * HTTP Response
  *
  * @package default
  * @author Luke Lanchester
  **/
-class Response implements ResponseInterface {
+class Response extends SymfonyResponse implements ResponseInterface {
 
 
 	/**
-	 * @var mixed Data
-	 **/
-	protected $data;
-
-
-	/**
-	 * @var string Content type
-	 **/
-	protected $content_type;
-
-
-	/**
-	 * Constructor
+	 * Serve the response
 	 *
-	 * @param mixed Data
+	 * @param Slab\Core\Http\RequestInterface
 	 * @return void
 	 **/
-	public function __construct($data = null) {
+	public function serve(RequestInterface $request = null) {
 
-		$this->setData($data);
-
-	}
-
-
-
-	/**
-	 * Set data
-	 *
-	 * @param mixed Data
-	 * @return void
-	 **/
-	public function setData($data) {
-
-		$this->data = $data;
-
-	}
-
-
-
-	/**
-	 * Get data
-	 *
-	 * @return mixed Data
-	 **/
-	public function getData() {
-
-		return $this->data;
-
-	}
-
-
-
-	/**
-	 * Set content type
-	 *
-	 * @param string Content type
-	 * @return void
-	 **/
-	public function setContentType($type) {
-
-		$this->content_type = $type;
-
-	}
-
-
-
-	/**
-	 * Get content type
-	 *
-	 * @return string Content type
-	 **/
-	public function getContentType() {
-
-		return $this->content_type;
-
-	}
-
-
-
-	/**
-	 * Output JSON
-	 *
-	 * @return void
-	 **/
-	public function serve() {
-
-		if(!headers_sent()) {
-			header('Content-Type: ' . $this->getContentType());
+		if($request === null) {
+			$request = slab('request');
 		}
 
-		echo (string) $this->getData();
+		$this->prepare($request);
+
+		$this->send();
 
 	}
 

@@ -12,7 +12,7 @@ interface ResponseInterface {
 
 
 	/**
-	 * Output response
+	 * Serve the response
 	 *
 	 * @return void
 	 **/
