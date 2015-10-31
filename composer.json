@@ -12,7 +12,7 @@
 	}],
 	"autoload": {
 		"psr-4": {
-			"Slab\\Core\\": "src",
+			"Slab\\Core\\": "src"
 		}
 	},
 	"require": {
