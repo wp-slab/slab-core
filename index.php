@@ -23,7 +23,6 @@ define('SLAB_CORE_START_MEMORY', memory_get_usage());
 // Include
 include SLAB_CORE_DIR . 'helpers.php';
 include SLAB_CORE_DIR . 'functions.php';
-include SLAB_CORE_DIR . 'src/Autoloader.php';
 
 
 // Hooks
