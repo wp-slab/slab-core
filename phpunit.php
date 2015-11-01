@@ -1,6 +1,14 @@
 <?php
 
-include 'vendor/autoload.php';
+$files = [
+	'./vendor/autoload.php',
+	'../../../vendor/autoload.php',
+];
 
-include 'src/Autoloader.php';
-(new Slab\Core\Autoloader)->registerNamespace('Slab\Core', __DIR__ . '/src');
+foreach($files as $file) {
+	if(is_file($file)) {
+		var_dump($file);
+		include $file;
+		break;
+	}
+}
