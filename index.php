@@ -27,3 +27,9 @@ include SLAB_CORE_DIR . 'functions.php';
 
 // Hooks
 add_action('plugins_loaded', 'Slab\Core\slab_core_init', 5);
+
+
+// Exception handler
+set_exception_handler(function(\Exception $e){
+	slab('Slab\Core\ExceptionHandler')->handle($e);
+});
