@@ -1,6 +1,9 @@
 machine:
   php:
     version: 5.5.9
+dependencies:
+  cache_directories:
+    - ~/.composer/cache
 test:
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
